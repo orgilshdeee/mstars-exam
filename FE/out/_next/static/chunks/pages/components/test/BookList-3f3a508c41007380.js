@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[648],{8157:function(n,t,u){(window.__NEXT_P=window.__NEXT_P||[]).push(["/components/test/BookList",function(){return u(4266)}])}},function(n){n.O(0,[885,622,188,266,774,888,179],function(){return n(n.s=8157)}),_N_E=n.O()}]);

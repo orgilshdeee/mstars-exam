@@ -90,7 +90,11 @@ export default function AddBookModal(props) {
             style={{
               width: "80%",
             }}
-          ></TextField>
+            inputProps={{
+              maxLength: 10,
+              minLength: 10,
+            }}
+          />
           <TextField
             label="Publisher"
             name="book_publisher"
