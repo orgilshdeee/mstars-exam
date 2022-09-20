@@ -7,7 +7,7 @@ export default function AddBookModal(props) {
   function submitHandler(e) {
     e.preventDefault();
     axios
-      .post(`http://localhost:4000/v1/books/`, {
+      .post(`https://orgil.ilearn.mn/v1/books`, {
         book_title: e.target.book_title.value,
         book_isbn: e.target.book_isbn.value,
         book_author: e.target.book_author.value,
@@ -47,19 +47,69 @@ export default function AddBookModal(props) {
             justifyContent: "center",
             alignItems: "center",
             borderRadius: 5,
+            margin: "15% 30%",
           }}
           onSubmit={submitHandler}
         >
-          <Typography>Edit Book</Typography>
-          <TextField label="Book Name" name="book_title"></TextField>
-          <TextField label="Price" name="book_price"></TextField>
-          <TextField label="Author" name="book_author"></TextField>
-          <TextField label="ISBN" name="book_isbn"></TextField>
-          <TextField label="Publisher" name="book_publisher"></TextField>
+          <Typography
+            style={{
+              fontWeight: "bold",
+              fontSize: "1.6rem",
+            }}
+          >
+            Add Book
+          </Typography>
+          <TextField
+            label="Book Name"
+            name="book_title"
+            required
+            style={{
+              width: "80%",
+            }}
+          />
+          <TextField
+            label="Price"
+            name="book_price"
+            required
+            style={{
+              width: "80%",
+            }}
+          ></TextField>
+          <TextField
+            label="Author"
+            name="book_author"
+            required
+            style={{
+              width: "80%",
+            }}
+          ></TextField>
+          <TextField
+            label="ISBN"
+            name="book_isbn"
+            required
+            style={{
+              width: "80%",
+            }}
+          ></TextField>
+          <TextField
+            label="Publisher"
+            name="book_publisher"
+            style={{
+              width: "80%",
+            }}
+          ></TextField>
           <TextField
             label="Published on"
             name="book_published_date"
-          ></TextField>
+            style={{
+              width: "80%",
+            }}
+            type="date"
+            required
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
           <Button variant="contained" type="submit">
             Save
           </Button>

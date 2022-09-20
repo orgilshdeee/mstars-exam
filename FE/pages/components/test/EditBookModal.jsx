@@ -8,7 +8,7 @@ export default function EditBookModal(props) {
   function submitHandler(e) {
     e.preventDefault();
     axios
-      .put(`http://localhost:4000/v1/books/${e.target._id.value}`, {
+      .put(`https://orgil.ilearn.mn/v1/books${e.target._id.value}`, {
         book_title: e.target.book_title.value,
         book_isbn: e.target.book_isbn.value,
         book_author: e.target.book_author.value,
@@ -48,39 +48,65 @@ export default function EditBookModal(props) {
             justifyContent: "center",
             alignItems: "center",
             borderRadius: 5,
+            margin: "15% 30%",
           }}
           onSubmit={submitHandler}
         >
-          <Typography>Edit Book</Typography>
+          <Typography
+            style={{
+              fontWeight: "bold",
+              fontSize: "1.6rem",
+            }}
+          >
+            Edit Book
+          </Typography>
           <TextField
             label="Book Name"
             defaultValue={props?.data?.book_title}
             name="book_title"
+            style={{
+              width: "80%",
+            }}
           ></TextField>
           <TextField
             label="Code"
             defaultValue={props?.data?._id.slice(5, 11)}
             name="_id"
+            style={{
+              width: "80%",
+            }}
           ></TextField>
           <TextField
             label="Price"
             defaultValue={props?.data?.book_price}
             name="book_price"
+            style={{
+              width: "80%",
+            }}
           ></TextField>
           <TextField
             label="Author"
             defaultValue={props?.data?.book_author}
             name="book_author"
+            style={{
+              width: "80%",
+            }}
           ></TextField>
           <TextField
             label="ISBN"
             defaultValue={props?.data?.book_isbn}
             name="book_isbn"
+            style={{
+              width: "80%",
+            }}
           ></TextField>
           <TextField
             label="Publisher"
             defaultValue={props?.data?.book_publisher}
             name="book_publisher"
+            style={{
+              width: "80%",
+            }}
           ></TextField>
           <TextField
             label="Published on"
@@ -88,6 +114,9 @@ export default function EditBookModal(props) {
               "YYYY-MM-DD"
             )}
             name="book_published_date"
+            style={{
+              width: "80%",
+            }}
           ></TextField>
           <Button variant="contained" type="submit">
             Save

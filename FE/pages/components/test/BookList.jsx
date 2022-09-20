@@ -1,14 +1,17 @@
+import * as React from "react";
 import useSWR from "swr";
 import axios from "axios";
-import Link from "next/link";
 import EditIcon from "@mui/icons-material/Edit";
+import AddIcon from "@mui/icons-material/Add";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Button from "@mui/material/Button";
 import EditBookModal from "./EditBookModal";
 import { useState } from "react";
 import moment from "moment";
-import { useEffect } from "react";
 import AddBookModal from "./AddBookModal";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 const {
   TableContainer,
@@ -23,12 +26,14 @@ const BookList = () => {
   const [openEditBook, setOpenEditBook] = useState(false);
   const [openAddBook, setOpenAddBook] = useState(false);
   const [editData, setEditData] = useState();
-  const booksApi = `http://localhost:4000/v1/books`;
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const booksApi = `https://orgil.ilearn.mn/v1/books`;
   const fetcher = async (url) => await axios.get(url).then((res) => res.data);
   const { data, error } = useSWR(booksApi, fetcher);
-  const [dataa, setDataa] = useState();
   function deleteHandler(id) {
-    axios.delete(`http://localhost:4000/v1/books/${id}`).then((res) => {
+    axios.delete(`https://orgil.ilearn.mn/v1/books/${id}`).then((res) => {
       if (res.status === 200) {
         location.reload();
       }
@@ -39,14 +44,62 @@ const BookList = () => {
       <Table aria-label="demo table">
         <TableHead>
           <TableRow>
-            <TableCell>#</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Code</TableCell>
-            <TableCell>Price</TableCell>
-            <TableCell>Authors</TableCell>
-            <TableCell>ISBN</TableCell>
-            <TableCell>Publisher</TableCell>
-            <TableCell>Published On</TableCell>
+            <TableCell
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              #
+            </TableCell>
+            <TableCell
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              Name
+            </TableCell>
+            <TableCell
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              Code
+            </TableCell>
+            <TableCell
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              Price
+            </TableCell>
+            <TableCell
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              Authors
+            </TableCell>
+            <TableCell
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              ISBN
+            </TableCell>
+            <TableCell
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              Publisher
+            </TableCell>
+            <TableCell
+              style={{
+                fontWeight: "bold",
+              }}
+            >
+              Published On
+            </TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
           </TableRow>
@@ -56,8 +109,20 @@ const BookList = () => {
             data?.data.map((d, i) => {
               return (
                 <TableRow key={i}>
-                  <TableCell>{i + 1}</TableCell>
-                  <TableCell>{d.book_title}</TableCell>
+                  <TableCell
+                    style={{
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {i + 1}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {d.book_title}
+                  </TableCell>
                   <TableCell>{d._id.slice(5, 11)}</TableCell>
                   <TableCell>{d.book_price}$</TableCell>
                   <TableCell>{d.book_author}</TableCell>
@@ -72,16 +137,65 @@ const BookList = () => {
                         setOpenEditBook(true), setEditData(data.data[i]);
                       }}
                     >
-                      <EditIcon />
+                      <EditIcon color="primary" />
                     </Button>
                   </TableCell>
                   <TableCell>
-                    <Button
-                      onClick={() => {
-                        deleteHandler(d._id);
-                      }}
-                    >
+                    <Button onClick={handleOpen}>
                       <DeleteForeverIcon />
+                      <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                      >
+                        <Box
+                          sx={{
+                            position: "absolute",
+                            top: "50%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                            width: 400,
+                            bgcolor: "background.paper",
+                            border: "2px solid #000",
+                            boxShadow: 24,
+                            p: 4,
+                          }}
+                        >
+                          <Typography
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              marginBottom: "20px",
+                            }}
+                          >
+                            Confirm to delete this book
+                          </Typography>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-around",
+                            }}
+                          >
+                            <Button
+                              variant="contained"
+                              onClick={() => {
+                                deleteHandler(d._id);
+                              }}
+                            >
+                              Yes
+                            </Button>
+                            <Button
+                              variant="contained"
+                              onClick={() => {
+                                location.reload();
+                              }}
+                            >
+                              No
+                            </Button>
+                          </div>
+                        </Box>
+                      </Modal>
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -93,7 +207,14 @@ const BookList = () => {
         onClick={() => {
           setOpenAddBook(true);
         }}
+        variant="contained"
+        style={{
+          margin: "1% 45%",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
       >
+        <AddIcon />
         Add Book
       </Button>
       <AddBookModal openAddBook={openAddBook} setOpenAddBook={setOpenAddBook} />
